@@ -3,7 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-def scrapePrices(caseURL):
+def scrapeContainer(caseURL):
 
     headers = { "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
 

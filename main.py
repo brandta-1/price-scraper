@@ -1,5 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from scrapePrices import scrapePrices
+from scrapeContainer import scrapeContainer
+from scrapeReward import scrapeReward
 from urllib.parse import urlparse, unquote
 import json
 
@@ -19,10 +20,14 @@ class priceScraper(BaseHTTPRequestHandler):
         post_unicode = post_data.decode('utf-8')
         post_json = json.loads(post_unicode)
         
-        post_res = scrapePrices(post_json['url'])
-        print(post_res)
-        post_res = json.dumps(post_res)
+        if(post_json['type'] == 'container'):
+            post_res = scrapeContainer(post_json['url'])
+         
+        if(post_json['type'] == 'reward'):
+            post_res = scrapeReward(post_json['url'],post_json['name'])
 
+        print(post_res)
+        post_res = json.dumps(post_res)    
         self.wfile.write(post_res.encode('utf-8'))
 
 server = HTTPServer((HOST, PORT), priceScraper)
