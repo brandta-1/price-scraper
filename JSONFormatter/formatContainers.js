@@ -24,10 +24,19 @@ const findRewardURLs = async (caseURL) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({url: caseURL})
+            body: JSON.stringify({url: caseURL, rare: true})
         }).then((res)=> res.json()).then((res)=> {return (res)})
 }
 
+const findRareURLs = async (caseURL) => {
+    return await fetch('http://localhost:8000/',{
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({url: caseURL})
+       }).then((res)=> res.json()).then((res)=> {return (res)})
+}
 
 //write rewards and their urls to their container
 const getRewards = async (container, url) => {
@@ -39,7 +48,7 @@ const getRewards = async (container, url) => {
                 floatCaps: "", 
                 url: findURL(res,getURLName(skin.name))
             })
-        })
+        });
     });
 }
 
